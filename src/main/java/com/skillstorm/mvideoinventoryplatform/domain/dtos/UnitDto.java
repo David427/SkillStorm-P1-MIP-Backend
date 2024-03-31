@@ -14,11 +14,11 @@ public class UnitDto {
     private Long id;
     private String series;
     private String model;
-    private Integer vram;
-    private Double factoryClock;
-    private Integer videoCores;
-    private Integer aiCores;
-    private Integer powerDraw;
+    private String vram;
+    private String factoryClock;
+    private String videoCores;
+    private String aiCores;
+    private String powerDraw;
     private WarehouseDto warehouse;
 
 }

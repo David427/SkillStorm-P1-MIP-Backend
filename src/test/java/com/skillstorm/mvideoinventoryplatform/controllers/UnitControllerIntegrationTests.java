@@ -232,7 +232,7 @@ public class UnitControllerIntegrationTests {
         UnitDto existentUnit = unitService.create(TestDataUtil.createTestUnitDto1(warehouse));
 
         UnitDto updatedUnit = TestDataUtil.createTestUnitDto1(warehouse);
-        updatedUnit.setPowerDraw(600);
+        updatedUnit.setPowerDraw("600");
         String updatedUnitJson = objectMapper.writeValueAsString(updatedUnit);
 
         mockMvc.perform(

@@ -30,19 +30,19 @@ public class Unit {
     private String model;
 
     @Column
-    private Integer vram;
+    private String vram;
 
     @Column
-    private Double factoryClock;
+    private String factoryClock;
 
     @Column
-    private Integer videoCores;
+    private String videoCores;
 
     @Column
-    private Integer aiCores;
+    private String aiCores;
 
     @Column
-    private Integer powerDraw;
+    private String powerDraw;
 
     @ManyToOne
     @JoinColumn(name = "wh_id_code", nullable = false)
