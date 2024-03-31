@@ -36,8 +36,11 @@ public class UnitServiceImpl implements UnitService {
         Unit newUnit = unitMapper.mapFrom(unitDto);
         Optional<Warehouse> warehouse = warehouseRepository.findById(unitDto.getWarehouse().getIdCode());
 
-        if (isExisting(newUnit.getId())) {
-            throw new UnitAlreadyExistsException("This unit already exists.");
+        // If the incoming DTO id is null, it's a new object
+        if (newUnit.getId() != null) {
+            if (isExisting(newUnit.getId())) {
+                throw new UnitAlreadyExistsException("This unit already exists.");
+            }
         }
 
         // Get id code from frontend, find the Warehouse in db, populate the Warehouse object in Unit, save Unit
