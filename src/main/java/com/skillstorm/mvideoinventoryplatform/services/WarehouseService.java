@@ -1,6 +1,7 @@
 package com.skillstorm.mvideoinventoryplatform.services;
 
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseDto;
+import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseStockDto;
 import com.skillstorm.mvideoinventoryplatform.exceptions.WarehouseAlreadyExistsException;
 import com.skillstorm.mvideoinventoryplatform.exceptions.WarehouseNotFoundException;
 
@@ -21,5 +22,7 @@ public interface WarehouseService {
     void delete(String idCode) throws WarehouseNotFoundException;
 
     boolean isExisting(String idCode);
+
+    List<WarehouseStockDto> getStock(String idCode);
 
 }

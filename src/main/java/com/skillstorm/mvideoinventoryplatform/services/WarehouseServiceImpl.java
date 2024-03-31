@@ -1,14 +1,17 @@
 package com.skillstorm.mvideoinventoryplatform.services;
 
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseDto;
+import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseStockDto;
 import com.skillstorm.mvideoinventoryplatform.domain.entities.Warehouse;
 import com.skillstorm.mvideoinventoryplatform.exceptions.WarehouseAlreadyExistsException;
 import com.skillstorm.mvideoinventoryplatform.exceptions.WarehouseNotFoundException;
 import com.skillstorm.mvideoinventoryplatform.mappers.Mapper;
+import com.skillstorm.mvideoinventoryplatform.repositories.UnitRepository;
 import com.skillstorm.mvideoinventoryplatform.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -20,10 +23,13 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     private final WarehouseRepository warehouseRepository;
 
+    private final UnitRepository unitRepository;
+
     @Autowired
-    public WarehouseServiceImpl(Mapper<Warehouse, WarehouseDto> warehouseMapper, WarehouseRepository warehouseRepository) {
+    public WarehouseServiceImpl(Mapper<Warehouse, WarehouseDto> warehouseMapper, WarehouseRepository warehouseRepository, UnitRepository unitRepository) {
         this.warehouseMapper = warehouseMapper;
         this.warehouseRepository = warehouseRepository;
+        this.unitRepository = unitRepository;
     }
 
     @Override
@@ -106,6 +112,32 @@ public class WarehouseServiceImpl implements WarehouseService {
     @Override
     public boolean isExisting(String idCode) {
         return warehouseRepository.existsById(idCode);
+    }
+
+    @Override
+    public List<WarehouseStockDto> getStock(String idCode) {
+        List<WarehouseStockDto> stockDtos = new ArrayList<>();
+        WarehouseStockDto model1Dto = WarehouseStockDto.builder()
+                .series("RGX")
+                .model("400")
+                .stock(unitRepository.countByModelAndWarehouse("400", idCode))
+                .build();
+        WarehouseStockDto model2Dto = WarehouseStockDto.builder()
+                .series("RGX")
+                .model("600 Super")
+                .stock(unitRepository.countByModelAndWarehouse("600 Super", idCode))
+                .build();
+        WarehouseStockDto model3Dto = WarehouseStockDto.builder()
+                .series("RGX")
+                .model("800 Extreme Pi")
+                .stock(unitRepository.countByModelAndWarehouse("800 Extreme Pi", idCode))
+                .build();
+
+        stockDtos.add(model1Dto);
+        stockDtos.add(model2Dto);
+        stockDtos.add(model3Dto);
+
+        return stockDtos;
     }
 
 }

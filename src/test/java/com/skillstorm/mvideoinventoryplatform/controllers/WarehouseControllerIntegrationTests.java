@@ -2,6 +2,7 @@ package com.skillstorm.mvideoinventoryplatform.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseDto;
+import com.skillstorm.mvideoinventoryplatform.services.UnitService;
 import com.skillstorm.mvideoinventoryplatform.services.WarehouseService;
 import com.skillstorm.mvideoinventoryplatform.utils.TestDataUtil;
 import org.junit.jupiter.api.Test;
@@ -30,11 +31,14 @@ public class WarehouseControllerIntegrationTests {
 
     private final WarehouseService warehouseService;
 
+    private final UnitService unitService;
+
     @Autowired
-    public WarehouseControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, WarehouseService warehouseService) {
+    public WarehouseControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, WarehouseService warehouseService, UnitService unitService) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
         this.warehouseService = warehouseService;
+        this.unitService = unitService;
     }
 
     @Test
@@ -69,12 +73,9 @@ public class WarehouseControllerIntegrationTests {
 
     @Test
     public void testThatGetAllWarehousesReturnsHttp302() throws Exception {
-        WarehouseDto warehouse1 = TestDataUtil.createTestWarehouseDto1();
-        WarehouseDto warehouse2 = TestDataUtil.createTestWarehouseDto2();
-        WarehouseDto warehouse3 = TestDataUtil.createTestWarehouseDto3();
-        warehouseService.create(warehouse1);
-        warehouseService.create(warehouse2);
-        warehouseService.create(warehouse3);
+        warehouseService.create(TestDataUtil.createTestWarehouseDto1());
+        warehouseService.create(TestDataUtil.createTestWarehouseDto2());
+        warehouseService.create(TestDataUtil.createTestWarehouseDto3());
 
         mockMvc.perform(get("/warehouses").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isFound());
@@ -82,9 +83,10 @@ public class WarehouseControllerIntegrationTests {
 
     @Test
     public void testThatGetOneWarehouseReturnsHttp302() throws Exception {
-        WarehouseDto existingWarehouse = warehouseService.create(TestDataUtil.createTestWarehouseDto1());
+        WarehouseDto existentWarehouse = warehouseService.create(TestDataUtil.createTestWarehouseDto1());
 
-        mockMvc.perform(get("/warehouses/" + existingWarehouse.getIdCode()).contentType(MediaType.APPLICATION_JSON))
+
+        mockMvc.perform(get("/warehouses/" + existentWarehouse.getIdCode()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isFound());
     }
 
@@ -96,6 +98,33 @@ public class WarehouseControllerIntegrationTests {
         mockMvc.perform(get("/warehouses/" + nonExistentWarehouse.getIdCode()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("ERROR: Warehouse not found."));
+    }
+
+    @Test
+    public void testThatGetWarehouseStockReturnsHttp200AndCorrectStock() throws Exception {
+        WarehouseDto warehouse = TestDataUtil.createTestWarehouseDto1();
+        warehouse.setStock(0);
+        warehouseService.create(warehouse);
+
+        unitService.create(TestDataUtil.createTestUnitDto1(warehouse));
+        unitService.create(TestDataUtil.createTestUnitDto2(warehouse));
+        unitService.create(TestDataUtil.createTestUnitDto3(warehouse));
+        unitService.create(TestDataUtil.createTestUnitDto4(warehouse));
+        unitService.create(TestDataUtil.createTestUnitDto5(warehouse));
+        unitService.create(TestDataUtil.createTestUnitDto6(warehouse));
+
+        mockMvc.perform(
+                get("/warehouses/" + warehouse.getIdCode() + "/stock")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                status().isOk()
+        ).andExpect(
+                jsonPath("$[0].stock").value(1)
+        ).andExpect(
+                jsonPath("$[1].stock").value(2)
+        ).andExpect(
+                jsonPath("$[2].stock").value(3)
+        );
     }
 
     @Test

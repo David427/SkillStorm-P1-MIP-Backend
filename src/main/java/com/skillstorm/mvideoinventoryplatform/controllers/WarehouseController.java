@@ -1,6 +1,7 @@
 package com.skillstorm.mvideoinventoryplatform.controllers;
 
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseDto;
+import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseStockDto;
 import com.skillstorm.mvideoinventoryplatform.exceptions.WarehouseAlreadyExistsException;
 import com.skillstorm.mvideoinventoryplatform.exceptions.WarehouseNotFoundException;
 import com.skillstorm.mvideoinventoryplatform.services.WarehouseService;
@@ -44,6 +45,11 @@ public class WarehouseController {
     @GetMapping("/{idCode}")
     public ResponseEntity<WarehouseDto> getWarehouse(@PathVariable("idCode") String idCode) throws WarehouseNotFoundException {
         return new ResponseEntity<>(warehouseService.findById(idCode), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/{idCode}/stock")
+    public ResponseEntity<List<WarehouseStockDto>> getWarehouseStock(@PathVariable("idCode") String idCode) {
+        return new ResponseEntity<>(warehouseService.getStock(idCode), HttpStatus.OK);
     }
 
     @PutMapping("/{idCode}")
