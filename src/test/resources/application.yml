@@ -1,0 +1,24 @@
+spring:
+  # For testing, the H2 database is configured to function like Postgres.
+#  datasource:
+  url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+  username: sa
+  password:
+  driver-class-name: org.h2.Driver
+#  url: ${SKILLSTORM_P1_DB_URL}
+#  username: ${SKILLSTORM_P1_DB_USER}
+#  password: ${SKILLSTORM_P1_DB_PW}
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  # ONLY USE WITH H2!
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+
+logging:
+  level:
+    com:
+      skillstorm: DEBUG

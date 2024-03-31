@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: inventory-platform
+
+  datasource:
+    url: ${SKILLSTORM_P1_DB_URL}
+    username: ${SKILLSTORM_P1_DB_USER}
+    password: ${SKILLSTORM_P1_DB_PW}
+
+  output:
+    ansi:
+      enabled: ALWAYS
