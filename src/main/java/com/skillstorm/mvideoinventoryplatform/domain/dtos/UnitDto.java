@@ -17,7 +17,6 @@ public class UnitDto {
     private String vram;
     private String factoryClock;
     private String videoCores;
-    private String aiCores;
     private String powerDraw;
     private WarehouseDto warehouse;
 

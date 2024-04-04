@@ -10,10 +10,7 @@ import com.skillstorm.mvideoinventoryplatform.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UnitServiceImpl implements UnitService {
@@ -58,9 +55,10 @@ public class UnitServiceImpl implements UnitService {
             throw new WarehouseNotFoundException("Cannot find the warehouse to add unit to.");
         }
 
+        // Set GPU specifications based on series & model
+        determineSpecs(newUnit);
         return unitMapper.mapTo(unitRepository.save(newUnit));
     }
-
 
     @Override
     public List<UnitDto> findAll() {
@@ -71,6 +69,21 @@ public class UnitServiceImpl implements UnitService {
             unitDtos.add(unitMapper.mapTo(unit));
         }
 
+        // Sort the return array (easier to do it here than in JavaScript)
+        unitDtos.sort(Comparator.comparing(UnitDto::getId));
+        return unitDtos;
+    }
+
+    @Override
+    public List<UnitDto> findAllByWarehouse(String idCode) {
+        List<UnitDto> unitDtos = new LinkedList<>();
+        List<Unit> foundUnits = unitRepository.findAllByWarehouseIdCode(idCode);
+
+        for (Unit unit : foundUnits) {
+            unitDtos.add(unitMapper.mapTo(unit));
+        }
+
+        unitDtos.sort(Comparator.comparing(UnitDto::getId));
         return unitDtos;
     }
 
@@ -90,6 +103,7 @@ public class UnitServiceImpl implements UnitService {
     public UnitDto fullUpdate(UnitDto unitDto) throws UnitNotFoundException {
         if (isExisting(unitDto.getId())) {
             Unit unit = unitMapper.mapFrom(unitDto);
+            determineSpecs(unit);
             Unit updatedUnit = unitRepository.save(unit);
             return unitMapper.mapTo(updatedUnit);
         } else {
@@ -101,13 +115,14 @@ public class UnitServiceImpl implements UnitService {
     public UnitDto partialUpdate(UnitDto unitDto) throws UnitNotFoundException {
         Unit unit = unitMapper.mapFrom(unitDto);
 
+        determineSpecs(unit);
+
         return unitRepository.findById(unit.getId()).map(existingUnit -> {
             Optional.ofNullable(unit.getSeries()).ifPresent(existingUnit::setSeries);
             Optional.ofNullable(unit.getModel()).ifPresent(existingUnit::setModel);
             Optional.ofNullable(unit.getVram()).ifPresent(existingUnit::setVram);
             Optional.ofNullable(unit.getFactoryClock()).ifPresent(existingUnit::setFactoryClock);
             Optional.ofNullable(unit.getVideoCores()).ifPresent(existingUnit::setVideoCores);
-            Optional.ofNullable(unit.getAiCores()).ifPresent(existingUnit::setAiCores);
             Optional.ofNullable(unit.getPowerDraw()).ifPresent(existingUnit::setPowerDraw);
             unitRepository.save(existingUnit);
             return unitMapper.mapTo(existingUnit);
@@ -154,8 +169,14 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public void delete(Long id) throws UnitNotFoundException {
-        if (isExisting(id)) {
+        Optional<Unit> deletedUnit = unitRepository.findById(id);
+
+        if (deletedUnit.isPresent()) {
+            Warehouse warehouse = deletedUnit.get().getWarehouse();
+            warehouse.setStock(warehouse.getStock() - 1);
+            warehouseRepository.save(warehouse);
             unitRepository.deleteById(id);
+
         } else {
             throw new UnitNotFoundException("Unit not found.");
         }
@@ -164,6 +185,27 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public boolean isExisting(Long id) {
         return unitRepository.existsById(id);
+    }
+
+    // In a real app, these values wouldn't be hardcoded
+    @Override
+    public void determineSpecs(Unit newUnit) {
+        if (newUnit.getSeries().equals("RGX") && newUnit.getModel().equals("400")) {
+            newUnit.setVram("12");
+            newUnit.setFactoryClock("2.5");
+            newUnit.setVideoCores("7168");
+            newUnit.setPowerDraw("300");
+        } else if (newUnit.getSeries().equals("RGX") && newUnit.getModel().equals("600 Super")) {
+            newUnit.setVram("16");
+            newUnit.setFactoryClock("2.65");
+            newUnit.setVideoCores("10240");
+            newUnit.setPowerDraw("375");
+        } else if (newUnit.getSeries().equals("RGX") && newUnit.getModel().equals("800 Extreme Pi")) {
+            newUnit.setVram("24");
+            newUnit.setFactoryClock("2.77");
+            newUnit.setVideoCores("16384");
+            newUnit.setPowerDraw("450");
+        }
     }
 
 }

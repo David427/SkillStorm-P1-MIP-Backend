@@ -15,7 +15,6 @@ public class TestDataUtil {
                 .vram("8")
                 .factoryClock("2.6")
                 .videoCores("4860")
-                .aiCores("840")
                 .powerDraw("300")
                 .warehouse(warehouse)
                 .build();
@@ -28,7 +27,6 @@ public class TestDataUtil {
                 .vram("12")
                 .factoryClock("2.9")
                 .videoCores("5840")
-                .aiCores("960")
                 .powerDraw("375")
                 .warehouse(warehouse)
                 .build();
@@ -41,7 +39,6 @@ public class TestDataUtil {
                 .vram("12")
                 .factoryClock("2.9")
                 .videoCores("5840")
-                .aiCores("960")
                 .powerDraw("375")
                 .warehouse(warehouse)
                 .build();
@@ -54,7 +51,6 @@ public class TestDataUtil {
                 .vram("16")
                 .factoryClock("3.2")
                 .videoCores("6600")
-                .aiCores("1240")
                 .powerDraw("450")
                 .warehouse(warehouse)
                 .build();
@@ -67,7 +63,6 @@ public class TestDataUtil {
                 .vram("16")
                 .factoryClock("3.2")
                 .videoCores("6600")
-                .aiCores("1240")
                 .powerDraw("450")
                 .warehouse(warehouse)
                 .build();
@@ -80,7 +75,6 @@ public class TestDataUtil {
                 .vram("16")
                 .factoryClock("3.2")
                 .videoCores("6600")
-                .aiCores("1240")
                 .powerDraw("450")
                 .warehouse(warehouse)
                 .build();
@@ -96,7 +90,6 @@ public class TestDataUtil {
                 .vram("8")
                 .factoryClock("2.6")
                 .videoCores("4860")
-                .aiCores("840")
                 .powerDraw("300")
                 .warehouse(warehouseDto)
                 .build();
@@ -110,7 +103,6 @@ public class TestDataUtil {
                 .vram("12")
                 .factoryClock("2.9")
                 .videoCores("5840")
-                .aiCores("960")
                 .powerDraw("375")
                 .warehouse(warehouseDto)
                 .build();
@@ -124,7 +116,6 @@ public class TestDataUtil {
                 .vram("12")
                 .factoryClock("2.9")
                 .videoCores("5840")
-                .aiCores("960")
                 .powerDraw("375")
                 .warehouse(warehouseDto)
                 .build();
@@ -138,7 +129,6 @@ public class TestDataUtil {
                 .vram("16")
                 .factoryClock("3.2")
                 .videoCores("6600")
-                .aiCores("1240")
                 .powerDraw("450")
                 .warehouse(warehouseDto)
                 .build();
@@ -152,7 +142,6 @@ public class TestDataUtil {
                 .vram("16")
                 .factoryClock("3.2")
                 .videoCores("6600")
-                .aiCores("1240")
                 .powerDraw("450")
                 .warehouse(warehouseDto)
                 .build();
@@ -166,7 +155,6 @@ public class TestDataUtil {
                 .vram("16")
                 .factoryClock("3.2")
                 .videoCores("6600")
-                .aiCores("1240")
                 .powerDraw("450")
                 .warehouse(warehouseDto)
                 .build();

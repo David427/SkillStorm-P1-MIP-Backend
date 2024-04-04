@@ -1,5 +1,6 @@
 package com.skillstorm.mvideoinventoryplatform.services;
 
+import com.skillstorm.mvideoinventoryplatform.domain.dtos.UnitDto;
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseDto;
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.WarehouseStockDto;
 import com.skillstorm.mvideoinventoryplatform.domain.entities.Warehouse;
@@ -11,10 +12,7 @@ import com.skillstorm.mvideoinventoryplatform.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
@@ -56,6 +54,8 @@ public class WarehouseServiceImpl implements WarehouseService {
             warehouseDtos.add(warehouseMapper.mapTo(warehouse));
         }
 
+        // Sort the return array (easier to do it here than in JavaScript)
+        warehouseDtos.sort(Comparator.comparing(WarehouseDto::getIdCode));
         return warehouseDtos;
     }
 

@@ -75,8 +75,6 @@ public class UnitControllerIntegrationTests {
         ).andExpect(
                 jsonPath("$.videoCores").value(newUnit.getVideoCores())
         ).andExpect(
-                jsonPath("$.aiCores").value(newUnit.getAiCores())
-        ).andExpect(
                 jsonPath("$.powerDraw").value(newUnit.getPowerDraw())
         ).andExpect(
                 jsonPath("$[*].idCode").value("BOS-WH-01-TEST")
@@ -218,8 +216,6 @@ public class UnitControllerIntegrationTests {
         ).andExpect(
                 jsonPath("$.videoCores").value(newUnit.getVideoCores())
         ).andExpect(
-                jsonPath("$.aiCores").value(newUnit.getAiCores())
-        ).andExpect(
                 jsonPath("$.powerDraw").value(newUnit.getPowerDraw())
         ).andExpect(
                 jsonPath("$[*].idCode").value(existentUnit.getWarehouse().getIdCode())
@@ -253,8 +249,6 @@ public class UnitControllerIntegrationTests {
                 jsonPath("$.factoryClock").value(existentUnit.getFactoryClock())
         ).andExpect(
                 jsonPath("$.videoCores").value(existentUnit.getVideoCores())
-        ).andExpect(
-                jsonPath("$.aiCores").value(existentUnit.getAiCores())
         ).andExpect(
                 jsonPath("$.powerDraw").value(updatedUnit.getPowerDraw())
         ).andExpect(

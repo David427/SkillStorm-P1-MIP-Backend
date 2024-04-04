@@ -3,6 +3,7 @@ package com.skillstorm.mvideoinventoryplatform.controllers;
 import com.skillstorm.mvideoinventoryplatform.domain.dtos.UnitDto;
 import com.skillstorm.mvideoinventoryplatform.exceptions.UnitNotFoundException;
 import com.skillstorm.mvideoinventoryplatform.services.UnitService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,24 @@ public class UnitController {
     public ResponseEntity<UnitDto> createUnit(@RequestBody UnitDto unitDto) throws Exception {
         // We need to get the nested warehouse JSON from the frontend. Ideally, it's passed in as just the id code
         // We can use to it find it the warehouse in the db, then add it to the Unit in the service layer
-        return new ResponseEntity<>(unitService.create(unitDto), HttpStatus.CREATED);
+        UnitDto responseUnit = unitService.create(unitDto);
+        return new ResponseEntity<>(responseUnit, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<UnitDto>> getAllUnits() {
         List<UnitDto> foundUnits = unitService.findAll();
+
+        if (!foundUnits.isEmpty()) {
+            return new ResponseEntity<>(foundUnits, HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/location")
+    public ResponseEntity<List<UnitDto>> getAllUnitsByWarehouse(@RequestParam("id") String idCode) {
+        List<UnitDto> foundUnits = unitService.findAllByWarehouse(idCode);
 
         if (!foundUnits.isEmpty()) {
             return new ResponseEntity<>(foundUnits, HttpStatus.FOUND);

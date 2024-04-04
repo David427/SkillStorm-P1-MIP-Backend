@@ -16,11 +16,7 @@ public class Unit {
 
     @Id
     @Column
-    @SequenceGenerator(
-            name = "units_id_seq",
-            allocationSize = 1
-    )
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "units_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 10)
@@ -37,9 +33,6 @@ public class Unit {
 
     @Column
     private String videoCores;
-
-    @Column
-    private String aiCores;
 
     @Column
     private String powerDraw;
