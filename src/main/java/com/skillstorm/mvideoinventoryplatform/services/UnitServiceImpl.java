@@ -115,7 +115,9 @@ public class UnitServiceImpl implements UnitService {
     public UnitDto partialUpdate(UnitDto unitDto) throws UnitNotFoundException {
         Unit unit = unitMapper.mapFrom(unitDto);
 
-        determineSpecs(unit);
+        if (unit.getSeries() != null && unit.getModel() != null) {
+            determineSpecs(unit);
+        }
 
         return unitRepository.findById(unit.getId()).map(existingUnit -> {
             Optional.ofNullable(unit.getSeries()).ifPresent(existingUnit::setSeries);

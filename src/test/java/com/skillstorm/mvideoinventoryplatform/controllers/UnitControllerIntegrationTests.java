@@ -227,8 +227,9 @@ public class UnitControllerIntegrationTests {
         WarehouseDto warehouse = warehouseService.create(TestDataUtil.createTestWarehouseDto1());
         UnitDto existentUnit = unitService.create(TestDataUtil.createTestUnitDto1(warehouse));
 
-        UnitDto updatedUnit = TestDataUtil.createTestUnitDto1(warehouse);
-        updatedUnit.setPowerDraw("600");
+        UnitDto updatedUnit = UnitDto.builder()
+                .powerDraw("600")
+                .build();
         String updatedUnitJson = objectMapper.writeValueAsString(updatedUnit);
 
         mockMvc.perform(
