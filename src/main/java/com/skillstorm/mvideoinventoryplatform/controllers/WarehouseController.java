@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/warehouses")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class WarehouseController {
 
     private final WarehouseService warehouseService;
@@ -36,7 +36,7 @@ public class WarehouseController {
 
         // This list should never be empty, but just in case...
         if (!foundWarehouses.isEmpty()) {
-            return new ResponseEntity<>(foundWarehouses, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundWarehouses, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -44,7 +44,7 @@ public class WarehouseController {
 
     @GetMapping("/{idCode}")
     public ResponseEntity<WarehouseDto> getWarehouse(@PathVariable("idCode") String idCode) throws WarehouseNotFoundException {
-        return new ResponseEntity<>(warehouseService.findById(idCode), HttpStatus.FOUND);
+        return new ResponseEntity<>(warehouseService.findById(idCode), HttpStatus.OK);
     }
 
     @GetMapping("/{idCode}/stock")

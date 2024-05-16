@@ -102,7 +102,7 @@ public class UnitControllerIntegrationTests {
         ).andExpect(
                 status().isUnprocessableEntity()
         ).andExpect(
-                content().string("ERROR: This unit already exists.")
+                content().string("This unit already exists.")
         );
 
     }
@@ -125,7 +125,7 @@ public class UnitControllerIntegrationTests {
         ).andExpect(
                 status().isNotFound()
         ).andExpect(
-                content().string("ERROR: Cannot find the warehouse to add unit to.")
+                content().string("Cannot find the warehouse to add unit to.")
         );
     }
 
@@ -148,7 +148,7 @@ public class UnitControllerIntegrationTests {
         ).andExpect(
                 status().isUnprocessableEntity()
         ).andExpect(
-                content().string("ERROR: Cannot add unit to warehouse. Current stock at capacity!")
+                content().string("Cannot add unit to warehouse. Current stock at capacity!")
         );
     }
 
@@ -290,7 +290,7 @@ public class UnitControllerIntegrationTests {
         ).andExpect(
                 status().isUnprocessableEntity()
         ).andExpect(
-                content().string("ERROR: Cannot add unit to warehouse. Current stock at capacity!")
+                content().string("Cannot add unit to warehouse. Current stock at capacity!")
         );
     }
 
@@ -316,7 +316,7 @@ public class UnitControllerIntegrationTests {
 
         mockMvc.perform(delete("/units/" + nonExistentUnit.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("ERROR: Unit not found."));
+                .andExpect(content().string("Unit not found."));
     }
 
 }

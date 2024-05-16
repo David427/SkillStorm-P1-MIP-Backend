@@ -68,7 +68,7 @@ public class WarehouseControllerIntegrationTests {
 
         mockMvc.perform(post("/warehouses").contentType(MediaType.APPLICATION_JSON).content(warehouseDtoCreateJson))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().string("ERROR: This warehouse already exists."));
+                .andExpect(content().string("This warehouse already exists."));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class WarehouseControllerIntegrationTests {
 
         mockMvc.perform(get("/warehouses/" + nonExistentWarehouse.getIdCode()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("ERROR: Warehouse not found."));
+                .andExpect(content().string("Warehouse not found."));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class WarehouseControllerIntegrationTests {
 
         mockMvc.perform(put("/warehouses/" + updatedWarehouse.getIdCode()).contentType(MediaType.APPLICATION_JSON).content(warehouseJson))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("ERROR: Warehouse not found."));
+                .andExpect(content().string("Warehouse not found."));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class WarehouseControllerIntegrationTests {
 
         mockMvc.perform(delete("/warehouses/" + nonExistentWarehouse.getIdCode()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string("ERROR: Warehouse not found."));
+                .andExpect(content().string("Warehouse not found."));
     }
 
 }

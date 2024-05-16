@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/units")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class UnitController {
 
     private final UnitService unitService;
@@ -37,7 +37,7 @@ public class UnitController {
         List<UnitDto> foundUnits = unitService.findAll();
 
         if (!foundUnits.isEmpty()) {
-            return new ResponseEntity<>(foundUnits, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundUnits, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -48,7 +48,7 @@ public class UnitController {
         List<UnitDto> foundUnits = unitService.findAllByWarehouse(idCode);
 
         if (!foundUnits.isEmpty()) {
-            return new ResponseEntity<>(foundUnits, HttpStatus.FOUND);
+            return new ResponseEntity<>(foundUnits, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -56,7 +56,7 @@ public class UnitController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UnitDto> getUnit(@PathVariable("id") Long id) throws UnitNotFoundException {
-        return new ResponseEntity<>(unitService.findById(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(unitService.findById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

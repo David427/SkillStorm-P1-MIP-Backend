@@ -17,8 +17,8 @@ public class UnitMapperImpl implements Mapper<Unit, UnitDto> {
     }
 
     @Override
-    public UnitDto mapTo(Unit unitDto) {
-        return modelMapper.map(unitDto, UnitDto.class);
+    public UnitDto mapTo(Unit unit) {
+        return modelMapper.map(unit, UnitDto.class);
     }
 
     @Override

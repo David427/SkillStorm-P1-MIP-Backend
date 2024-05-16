@@ -12,32 +12,32 @@ public class ExceptionHandlerAdvice {
     // Not sure 422 - UNPROCESSABLE ENTITY is the best response code. Maybe 400 - BAD REQUEST is better
     @ExceptionHandler(WarehouseAlreadyExistsException.class)
     public ResponseEntity handleEntityAlreadyExists(WarehouseAlreadyExistsException e) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("ERROR: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
     }
 
     @ExceptionHandler(UnitAlreadyExistsException.class)
     public ResponseEntity handleEntityAlreadyExists(UnitAlreadyExistsException e) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("ERROR: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
     }
 
     @ExceptionHandler(WarehouseNotFoundException.class)
     public ResponseEntity handleEntityNotFound(WarehouseNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(UnitNotFoundException.class)
     public ResponseEntity handleEntityNotFound(UnitNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(WarehouseAtCapacityException.class)
     public ResponseEntity handleWarehouseAtCapacity(WarehouseAtCapacityException e) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("ERROR: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
     }
 
     @ExceptionHandler(UnitAlreadyInWarehouseException.class)
     public ResponseEntity handleUnitAlreadyInWarehouse(UnitAlreadyInWarehouseException e) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("ERROR: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
     }
 
 }

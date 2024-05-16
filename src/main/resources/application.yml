@@ -3,9 +3,9 @@ spring:
     name: inventory-platform
 
   datasource:
-    url: ${SKILLSTORM_P1_DB_URL}
-    username: ${SKILLSTORM_P1_DB_USER}
-    password: ${SKILLSTORM_P1_DB_PW}
+    url: ${PG_DB_URL}
+    username: ${PG_DB_USER}
+    password: ${PG_DB_PW}
 
   output:
     ansi:
